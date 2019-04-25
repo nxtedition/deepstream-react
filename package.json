@@ -21,5 +21,21 @@
     "jsonwebtoken": "8.5.x",
     "react": ">= 16.8.6",
     "react-dom": ">= 16.8.6"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --single-quote --no-semi --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "devDependencies": {
+    "husky": "2.1.0",
+    "lint-staged": "8.1.5",
+    "prettier": "1.17.0"
   }
 }
