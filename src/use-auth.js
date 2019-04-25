@@ -36,7 +36,7 @@ const onDenied = (state, action) => ({
 })
 
 const reducer = (state, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case 'init':
       return onInit(state, action)
     case 'setToken':
@@ -145,14 +145,14 @@ const useAutoRefresh = ({ ds, token, dispatch }) => {
     return () => {
       window.clearTimeout(timeout)
     }
-  }, [ ds, token ])
+  }, [ds, token])
 }
 
 export const useAuth = ({ ds, username, password }) => {
-  const [ state, dispatch ] = React.useReducer(reducer, initialState)
+  const [state, dispatch] = React.useReducer(reducer, initialState)
   const { token } = state
   useLogin({ ds, dispatch, token, username, password })
   useAutoRefresh({ ds, dispatch, token })
 
-  return [ state, dispatch ]
+  return [state, dispatch]
 }

@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import { Deepstream } from './provider'
 
 export const useRecord = (id, path) => {
@@ -10,14 +10,13 @@ export const useRecord = (id, path) => {
       return
     }
 
-    const subscription = ds.record.observe(id)
-      .subscribe(data => {
-        if (path) {
-          setData(data[path])
-        } else {
-          setData(data)
-        }
-      })
+    const subscription = ds.record.observe(id).subscribe(data => {
+      if (path) {
+        setData(data[path])
+      } else {
+        setData(data)
+      }
+    })
 
     return () => {
       subscription.unsubscribe()

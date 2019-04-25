@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 export const useObservable = (observable, initialValue) => {
   const [data, setData] = React.useState(initialValue)

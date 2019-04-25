@@ -18,9 +18,7 @@ const DeepstreamProvider = ({ url, username, password, children }) => {
   const value = { auth, dispatch, ds }
 
   return (
-    <Deepstream.Provider value={value}>
-      {children(value)}
-    </Deepstream.Provider>
+    <Deepstream.Provider value={value}>{children(value)}</Deepstream.Provider>
   )
 }
 

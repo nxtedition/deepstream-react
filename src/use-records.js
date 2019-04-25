@@ -1,7 +1,7 @@
-import React from "react"
-import { Deepstream } from "./provider"
+import React from 'react'
+import { Deepstream } from './provider'
 
-const hash = (ids) => {
+const hash = ids => {
   return ids ? ids.join('') : ''
 }
 
