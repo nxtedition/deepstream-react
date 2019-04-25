@@ -1,17 +1,14 @@
 import React from 'react'
 
-export const useObservable = (observable, initialValue) => {
+export const useObservable = (args, factory, initialValue) => {
   const [data, setData] = React.useState(initialValue)
 
   React.useEffect(() => {
-    const subscription = observable.subscribe(data => {
-      setData(data)
-    })
-
+    const subscription = factory(...args).subscribe(setData)
     return () => {
       subscription.unsubscribe()
     }
-  }, [observable])
+  }, [factory].concat(args))
 
   return data
 }

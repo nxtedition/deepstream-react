@@ -1,33 +1,47 @@
 import React from 'react'
 import { Deepstream } from './provider'
+import { Observable } from 'rxjs'
 
-const hash = ids => {
-  return ids ? ids.join('') : ''
-}
+export const useRecord = (ids, path, state, debounce) => {
+  let initialValue = null
 
-export const useRecords = ids => {
+  if (Array.isArray(ids)) {
+    initialValue = []
+  } else if (!path) {
+    initialValue = {}
+  }
+
   const { ds, auth } = React.useContext(Deepstream)
-  const [values, setValues] = React.useState([])
+  const [values, setValues] = React.useState(initialValue)
+
+  ids = auth && ds && ids && ids.length > 0 ? ids : null
 
   React.useEffect(() => {
-    if (!ds || !auth) {
-      return
-    }
+    if (!ids) {
+      setValues(initialValue)
+    } else {
+      const observe = id =>
+        ds.record
+          .observe(id, state)
+          .publish(x$ =>
+            path ? x$.pluck(...path.split('.')).distinctUntilChanged() : x$
+          )
 
-    const subscriptions = ids.map((id, idx) =>
-      ds.record.observe(id).subscribe(data => {
-        setValues(values => {
-          const tmp = [...values]
-          tmp[idx] = data
-          return tmp
-        })
-      })
-    )
+      const observable = Array.isArray(ids)
+        ? Observable.combineLatest(ids.map(observe))
+        : observe(ids)
 
-    return () => {
-      subscriptions.map(subscription => subscription.unsubscribe())
+      const subscription = observable
+        .publish(x$ =>
+          typeof debounce === 'number' ? x$.debounceTime(debounce) : x$
+        )
+        .subscribe(setValues)
+
+      return () => {
+        subscription.unsubscribe()
+      }
     }
-  }, [ds, auth, hash(ids)])
+  }, [ds, path, state, debounce].concat(ids))
 
   return values
 }
