@@ -1,0 +1,25 @@
+{
+  "name": "deepstream-react",
+  "version": "0.0.1",
+  "description": "React Hooks for Deepstream",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nxtedition/deepstream-react.git"
+  },
+  "author": "Boffins Technologies",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nxtedition/deepstream-react/issues"
+  },
+  "homepage": "https://github.com/nxtedition/deepstream-react#readme",
+  "peerDependencies": {
+    "@nxtedition/deepstream.io-client-js": "9.x",
+    "jsonwebtoken": "8.5.x",
+    "react": ">= 16.8.6",
+    "react-dom": ">= 16.8.6"
+  }
+}
